@@ -9,13 +9,15 @@ import Header from '../../components/Header';
 import SmallInput from '../../components/SmallInput/index';
 import GuildIcon from '../../components/GuildIcon';
 
-import { theme } from '../../global/styles/theme';
-import { styles } from './styles';
 import TextArea from '../../components/TextArea';
-import Button from '../../components/ButtonIcon';
+import Button from '../../components/Button';
 import ModalView from '../../components/ModalView';
 import Guilds from '../Guilds/index';
+
 import { GuildProps } from '../../components/Appointment/index';
+
+import { theme } from '../../global/styles/theme';
+import { styles } from './styles';
 
 type Props = {
   title: string;
@@ -31,16 +33,19 @@ const AppointmentCreate: React.FC<Props> = ({
   const [guild, setGuild] = useState<GuildProps>({} as GuildProps)
 
   function handleCategorySelect(categoryId: string) {
-    categoryId === category ? setCategory('') : setCategory(categoryId);
+    setCategory(categoryId);
   }
 
   function handleShowGuilds() {
     setShowModal(true);
   }
 
+  function handleCloseGuilds() {
+    setShowModal(false);
+  }
+
   function handleGuildSelected(guildSelected: GuildProps) {
     setGuild(guildSelected);
-    console.log(guildSelected);
     setShowModal(false);
   }
 
@@ -49,89 +54,88 @@ const AppointmentCreate: React.FC<Props> = ({
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView>
-
-      <Background>
-        <Header 
-          title="Agendar Partida"
-          />
-        <View>
-          <Text style={[
-            styles.label,
-            {
-              marginLeft: 24,
-              marginTop: 36,
-              marginBottom: 18
-            }
-          ]}>
-            Categoria
-          </Text>
-          <CategorySelect
-            categorySelected={category}
-            setCategory={handleCategorySelect}
-            hasCheckBox
-          />
-        </View>
-
-          <View style={styles.form}>
-            <RectButton onPress={handleShowGuilds}>
-              <View style={styles.select}>
-                { guild.icon 
-                  ?  <GuildIcon />
-                  : <View style={styles.image} />
-                }
-
-                <View style={styles.selectBody}>
-                  <Text style={styles.label}>
-                    { guild.name ? guild.name : 'Selecione um Servidor' }
-                  </Text>
-                </View>
-
-                <Icon name="chevron-right" size={10} color={theme.colors.heading} />
-              </View>
-            </RectButton>
-
-            <View style={styles.field}>
-              <View>
-                <Text style={[styles.label, { marginBottom: 12 }]}>
-                  Dia e mês
-                </Text>
-                <View style={styles.column}>
-                  <SmallInput maxLength={2} />
-                  <Text style={styles.divider}>/</Text>
-                  <SmallInput maxLength={2} />
-                </View>
-              </View>
-
-              <View>
-                <Text style={[styles.label, { marginBottom: 12 }]}>
-                  Hora e minuto
-                </Text>
-                <View style={styles.column}>
-                  <SmallInput maxLength={2} />
-                  <Text style={styles.divider}>:</Text>
-                  <SmallInput maxLength={2} />
-                </View>
-              </View>
-            </View>
-
-            <View style={[styles.field, { marginBottom: 12 }]}>
-              <Text style={styles.label}>Descrição</Text>
-              <Text style={styles.subLabel}>Max 100 caracteres</Text>
-            </View>
-            <TextArea 
-              multiline
-              maxLength={100}
-              numberOfLines={5}
-              autoCorrect={false}
+        <Background>
+          <Header 
+            title="Agendar Partida"
+            />
+          <View>
+            <Text style={[
+              styles.label,
+              {
+                marginLeft: 24,
+                marginTop: 36,
+                marginBottom: 18
+              }
+            ]}>
+              Categoria
+            </Text>
+            <CategorySelect
+              categorySelected={category}
+              setCategory={handleCategorySelect}
+              hasCheckBox
             />
           </View>
+
+            <View style={styles.form}>
+              <RectButton onPress={handleShowGuilds}>
+                <View style={styles.select}>
+                  { guild.icon 
+                    ?  <GuildIcon />
+                    : <View style={styles.image} />
+                  }
+
+                  <View style={styles.selectBody}>
+                    <Text style={styles.label}>
+                      { guild.name ? guild.name : 'Selecione um Servidor' }
+                    </Text>
+                  </View>
+
+                  <Icon name="chevron-right" size={10} color={theme.colors.heading} />
+                </View>
+              </RectButton>
+
+              <View style={styles.field}>
+                <View>
+                  <Text style={[styles.label, { marginBottom: 12 }]}>
+                    Dia e mês
+                  </Text>
+                  <View style={styles.column}>
+                    <SmallInput maxLength={2} />
+                    <Text style={styles.divider}>/</Text>
+                    <SmallInput maxLength={2} />
+                  </View>
+                </View>
+
+                <View>
+                  <Text style={[styles.label, { marginBottom: 12 }]}>
+                    Hora e minuto
+                  </Text>
+                  <View style={styles.column}>
+                    <SmallInput maxLength={2} />
+                    <Text style={styles.divider}>:</Text>
+                    <SmallInput maxLength={2} />
+                  </View>
+                </View>
+              </View>
+
+              <View style={[styles.field, { marginBottom: 12 }]}>
+                <Text style={styles.label}>Descrição</Text>
+                <Text style={styles.subLabel}>Max 100 caracteres</Text>
+              </View>
+              <TextArea 
+                multiline
+                maxLength={100}
+                numberOfLines={5}
+                autoCorrect={false}
+              />
+            </View>
 
           <View style={styles.footer}>
             <Button title="Agendar" />
           </View>
-      </Background>
+        </Background>
       </ScrollView>
-      <ModalView visible={showModal}>
+      <ModalView visible={showModal} closeModal={handleCloseGuilds}>
         <Guilds handleGuildSelected={handleGuildSelected} />
       </ModalView>
     </KeyboardAvoidingView>

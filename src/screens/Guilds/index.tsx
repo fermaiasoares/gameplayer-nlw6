@@ -30,7 +30,31 @@ const Guilds: React.FC<Props> = ({ handleGuildSelected }) => {
       name: 'Rocketseat',
       icon: 'null',
       owner: false
-    }
+    },
+    {
+      id: '4',
+      name: 'Rocketseat',
+      icon: 'null',
+      owner: false
+    },
+    {
+      id: '5',
+      name: 'Rocketseat',
+      icon: 'null',
+      owner: false
+    },
+    {
+      id: '6',
+      name: 'Rocketseat',
+      icon: 'null',
+      owner: false
+    },
+    {
+      id: '7',
+      name: 'Rocketseat',
+      icon: 'null',
+      owner: false
+    },
   ]
 
   return (
@@ -44,8 +68,10 @@ const Guilds: React.FC<Props> = ({ handleGuildSelected }) => {
             onPress={() => handleGuildSelected(item)}
           />
         )}
-        ItemSeparatorComponent={() => <ListDivider />}
+        ItemSeparatorComponent={() => <ListDivider isCentered />}
+        ListHeaderComponent={() => <ListDivider isCentered />}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 70, paddingTop: 104 }}
         style={styles.guilds}
       />
     </View>
