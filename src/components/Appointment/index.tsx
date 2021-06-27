@@ -1,6 +1,7 @@
 import React from 'react';
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
 import GuildIcon from '../GuildIcon/index';
 import { categories } from '../../utils/categories';
@@ -14,7 +15,7 @@ import CalendarSvg from '../../assets/calendar.svg';
 export type GuildProps = {
   id: string;
   name: string;
-  icon: null;
+  icon: string | null;
   owner: boolean;
 }
 
@@ -31,6 +32,7 @@ type Props = RectButtonProps & {
 }
 
 const Appointment: React.FC<Props> = ({ data, ...rest }) => {
+  const navigation = useNavigation();
   const [category] = categories.filter(category => category.id === data.category);
   const { owner } = data.guild;
   const { primary, on } = theme.colors;
