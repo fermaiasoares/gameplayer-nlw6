@@ -10,7 +10,7 @@ type Props = {
 const GuildIcon: React.FC<Props> = ({}) => {
   return (
     <Image 
-      source={{ uri: 'https://toppng.com/uploads/preview/discord-logo-01-discord-logo-11562849833clsolz2mbc.png' }}
+      source={{ uri: 'https://play-lh.googleusercontent.com/Wq15hCMPJW-eUz-c4DtnUxHkk2s-pVra14td-E4b05Eo-Cu8Koj6BqPUNULbh9HfjpkC=s180-rw' }}
       style={styles.image}
     />
   );
