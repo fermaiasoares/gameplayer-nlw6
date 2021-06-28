@@ -7,7 +7,7 @@ import { styles } from './styles';
 
 import { theme } from '../../global/styles/theme';
 
-type MemberProps = {
+export type MemberProps = {
   id: string;
   avatar_url: string;
   username: string;

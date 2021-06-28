@@ -1,18 +1,29 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 
+const { CDN_IMAGE } = process.env;
+
+import DiscordSvg from '../../assets/discord.svg';
+
 import { styles } from './styles';
 
 type Props = {
-
+  guildId: string;
+  iconId: string;
 }
 
-const GuildIcon: React.FC<Props> = ({}) => {
+const GuildIcon: React.FC<Props> = ({ guildId, iconId}) => {
+  const uri = `${CDN_IMAGE}/icons/${guildId}/${iconId}.png`;
   return (
-    <Image 
-      source={{ uri: 'https://play-lh.googleusercontent.com/Wq15hCMPJW-eUz-c4DtnUxHkk2s-pVra14td-E4b05Eo-Cu8Koj6BqPUNULbh9HfjpkC=s180-rw' }}
-      style={styles.image}
-    />
+    <View style={styles.container}>
+      {
+        iconId ? <Image 
+          source={{ uri }}
+          style={styles.image}
+        />
+        : <DiscordSvg width={40} heigth={40} />
+      }
+    </View>
   );
 }
 

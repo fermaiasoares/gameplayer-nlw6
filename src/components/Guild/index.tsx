@@ -19,7 +19,7 @@ const Guild: React.FC<Props> = ({data, ...rest}) => {
       activeOpacity={0.7}
       {...rest}
     >
-      <GuildIcon />
+      <GuildIcon iconId={data.icon} guildId={data.id} />
 
       <View style={styles.content}>
         <>
