@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
-import Guild from '../../components/Guild';
-import ListDivider from '../../components/ListDivider';
 
 import { GuildProps } from '../../components/Appointment/index';
+import Guild from '../../components/Guild';
+import ListDivider from '../../components/ListDivider';
+import Loading from '../../components/Loading';
+import { api } from '../../services/api';
 
 import { styles } from './styles';
 
@@ -12,68 +14,39 @@ type Props = {
 }
 
 const Guilds: React.FC<Props> = ({ handleGuildSelected }) => {
-  const guilds = [
-    {
-      id: '1',
-      name: 'Lendários',
-      icon: 'null',
-      owner: true
-    },
-    {
-      id: '2',
-      name: 'Legionários',
-      icon: 'null',
-      owner: false
-    },
-    {
-      id: '3',
-      name: 'Rocketseat',
-      icon: 'null',
-      owner: false
-    },
-    {
-      id: '4',
-      name: 'Rocketseat',
-      icon: 'null',
-      owner: false
-    },
-    {
-      id: '5',
-      name: 'Rocketseat',
-      icon: 'null',
-      owner: false
-    },
-    {
-      id: '6',
-      name: 'Rocketseat',
-      icon: 'null',
-      owner: false
-    },
-    {
-      id: '7',
-      name: 'Rocketseat',
-      icon: 'null',
-      owner: false
-    },
-  ]
+  const [guilds, setGuilds] = useState<GuildProps[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchGuilds();
+  }, [])
+
+  async function fetchGuilds() {
+    const response = await api.get('/users/@me/guilds');
+    setGuilds(response.data);
+    setLoading(false);
+  }
 
   return (
     <View style={styles.container}>
-      <FlatList 
-        data={guilds}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <Guild 
-            data={item}
-            onPress={() => handleGuildSelected(item)}
-          />
-        )}
-        ItemSeparatorComponent={() => <ListDivider isCentered />}
-        ListHeaderComponent={() => <ListDivider isCentered />}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 70, paddingTop: 104 }}
-        style={styles.guilds}
-      />
+      {
+        loading ? <Loading /> : 
+        <FlatList 
+          data={guilds}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <Guild 
+              data={item}
+              onPress={() => handleGuildSelected(item)}
+              />
+            )}
+          ItemSeparatorComponent={() => <ListDivider isCentered />}
+          ListHeaderComponent={() => <ListDivider isCentered />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 70, paddingTop: 104 }}
+          style={styles.guilds}
+        />
+      }
     </View>
   )
 }
